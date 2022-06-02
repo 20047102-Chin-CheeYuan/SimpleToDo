@@ -70,10 +70,14 @@ public class MainActivity extends AppCompatActivity {
         btAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String task = etTask.getText().toString();
-                taskList.add(task);
-                aaTask.notifyDataSetChanged();
-                etTask.getText().clear();
+                if (etTask.getText().toString().trim().length() == 0) {
+                    Toast.makeText(MainActivity.this, "Please enter task to do", Toast.LENGTH_SHORT).show();
+                } else {
+                    String task = etTask.getText().toString();
+                    taskList.add(task);
+                    aaTask.notifyDataSetChanged();
+                    etTask.getText().clear();
+                }
             }
         });
 
@@ -81,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (etTask.getText().toString().trim().length() == 0) {
-                    Toast.makeText(MainActivity.this, "The field is empty", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Please input an index of task", Toast.LENGTH_SHORT).show();
                 } else {
                     int pos = Integer.parseInt(etTask.getText().toString());
 
@@ -92,10 +96,12 @@ public class MainActivity extends AppCompatActivity {
                                 aaTask.notifyDataSetChanged();
                                 etTask.getText().clear();
                             } else if (pos > taskList.size() - 1) {
+                                etTask.getText().clear();
                                 Toast.makeText(MainActivity.this, "Wrong index number", Toast.LENGTH_SHORT).show();
                             }
                         }
                     } else {
+                        etTask.getText().clear();
                         Toast.makeText(MainActivity.this, "You don't have any task to remove", Toast.LENGTH_SHORT).show();
 
                     }
@@ -110,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 taskList.clear();
                 aaTask.notifyDataSetChanged();
                 etTask.getText().clear();
+                Toast.makeText(MainActivity.this, "Task list is Cleared!", Toast.LENGTH_SHORT).show();
             }
         });
 
